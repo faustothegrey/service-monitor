@@ -105,13 +105,15 @@ def send_email(subject: str, body: str):
         print(f"  ⚠️  Email non inviata: SMTP_PASSWORD non impostata")
         return
 
-    message = f"""From: {ALERT_EMAIL_FROM}
-To: {ALERT_EMAIL_TO}
-Subject: {subject}
-Content-Type: text/plain; charset=utf-8
-
-{body}
-"""
+    message_lines = [
+        f"From: {ALERT_EMAIL_FROM}",
+        f"To: {ALERT_EMAIL_TO}",
+        f"Subject: {subject}",
+        "Content-Type: text/plain; charset=utf-8",
+        "",
+        body,
+    ]
+    message = "\r\n".join(message_lines)
 
     try:
         context = ssl.create_default_context()
